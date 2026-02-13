@@ -1,10 +1,16 @@
 {
   "development": {
-    "username": "harathi",
-    "password": "harathi123",
-    "database": "aws_tasks_db",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "postgres",
+    "password": "harathibg",
+    "database": "tasks",
+    "host": "database-1.cbi6ya46sie7.eu-north-1.rds.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions":{
+      "ssl":{
+     "require":true,
+     "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "root",
@@ -14,10 +20,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "postgres",
+    "password": "harathibg",
+    "database": "tasks",
+    "host": "database-1.cbi6ya46sie7.eu-north-1.rds.amazonaws.com",
+    "dialect": "postgres"
   }
 }
