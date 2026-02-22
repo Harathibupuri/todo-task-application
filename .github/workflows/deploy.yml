@@ -29,6 +29,8 @@ jobs:
             cd todo-task-application
 
             git pull origin master
+            # Create env file from GitHub secret
+            echo "${{ secrets.ENV_FILE }}" > .env
             npm install
             npm run build
 
