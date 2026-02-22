@@ -30,6 +30,7 @@ jobs:
 
             git pull origin master
             npm install
+            npm run build
 
             pkill node || true
-            npm start
+            npm run dev
