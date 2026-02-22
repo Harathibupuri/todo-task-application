@@ -1,0 +1,34 @@
+name: Deploy Backend to EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            sudo yum install git -y || true
+            curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash - || true
+            sudo yum install nodejs -y || true
+
+            cd ~/todo-task-application || git clone https://github.com/Harathibupuri/todo-task-application.git || true
+            cd todo-task-application
+
+            git pull origin master
+            npm install
+
+            pkill node || true
+            npm start
