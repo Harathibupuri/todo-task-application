@@ -22,11 +22,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: CDK Deploy
-        working-directory: cdk/aws-cdk
         run: |
-          npm install
-          npx cdk bootstrap
-          npx cdk deploy --require-approval never
+           cd cdk/aws-cdk
+           npm install
+           npx cdk bootstrap
+           npx cdk deploy --require-approval never
           
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
