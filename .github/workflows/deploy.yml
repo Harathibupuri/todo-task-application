@@ -27,7 +27,7 @@ jobs:
           npm install
           npx cdk bootstrap
           npx cdk deploy --app "npx ts-node --prefer-ts-exts bin/aws-cdk.ts" --require-approval never
-
+      # Deploy Backend to EC2
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
         with:
