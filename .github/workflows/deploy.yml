@@ -44,6 +44,7 @@ jobs:
             echo "${{ secrets.ENV_FILE }}" > .env
             npm install
             npm run build
+            
 
             pkill node || true
             nohup npm start > app.log 2>&1 &
