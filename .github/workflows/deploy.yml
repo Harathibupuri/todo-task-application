@@ -20,22 +20,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      
-      - name: Debug Folder
-        run: |
-           pwd
-           ls -la
-           ls -la cdk
-           ls -la cdk/aws-cdk
 
       - name: CDK Deploy
+        working-directory: ./cdk/aws-cdk
         run: |
-            cd cdk/aws-cdk
-            npm install
-            npx cdk bootstrap
-            npx cdk deploy --require-approval never
+          npm ci
+          npx cdk deploy --require-approval never
 
-      
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
         with:
