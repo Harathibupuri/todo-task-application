@@ -28,14 +28,14 @@ jobs:
            ls -la cdk
            ls -la cdk/aws-cdk
 
-
       - name: CDK Deploy
         run: |
-           cd cdk/aws-cdk
-           npm install
-           npx cdk bootstrap --app "npx ts-node --prefer-ts-exts bin/aws-cdk.ts"
-           npx cdk deploy --require-approval never --app "npx ts-node --prefer-ts-exts bin/aws-cdk.ts"
-          
+            cd cdk/aws-cdk
+            npm install
+            npx cdk bootstrap
+            npx cdk deploy --require-approval never
+
+      
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
         with:
