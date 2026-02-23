@@ -31,7 +31,7 @@ jobs:
         run: |
           cd cdk/aws-cdk
           npm install
-          cdk deploy --require-approval never
+          npx cdk deploy --require-approval never
 
       # Deploy Backend to EC2
       - name: Deploy Backend to EC2
