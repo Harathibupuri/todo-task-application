@@ -1,4 +1,4 @@
-name: Deploy Backend to EC2
+name: Deploy Backend + CDK
 
 on:
   push:
@@ -14,22 +14,40 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy to EC2
+      # AWS Login for CDK
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Install CDK
+      - name: Install CDK
+        run: npm install -g aws-cdk
+
+      # Deploy Infrastructure
+      - name: CDK Deploy
+        run: |
+          cd cdk/aws-cdk
+          npm install
+          cdk deploy --require-approval never
+
+      # Deploy Backend to EC2
+      - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo yum install git -y || true
-            curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash - || true
-            sudo yum install nodejs -y || true
+            curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
+            sudo yum install nodejs git -y
 
-            cd ~/todo-task-application || git clone https://github.com/Harathibupuri/todo-task-application.git || true
+            cd ~/todo-task-application || git clone https://github.com/Harathibupuri/todo-task-application.git
             cd todo-task-application
 
             git pull origin master
-            # Create env file from GitHub secret
             echo "${{ secrets.ENV_FILE }}" > .env
             npm install
             npm run build
