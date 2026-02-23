@@ -35,4 +35,4 @@ jobs:
             npm run build
 
             pkill node || true
-            npm run dev
+            nohup npm start > app.log 2>&1 &
