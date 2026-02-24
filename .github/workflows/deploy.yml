@@ -26,9 +26,9 @@ jobs:
         run: |
           npm ci
           npm run build
-          npx cdk deploy \
-          --app "node bin/aws-cdk.js" \
-          --require-approval never
+          ls -la bin
+          npx cdk deploy --require-approval never
+          
       - name: Deploy Backend to EC2
         uses: appleboy/ssh-action@master
         with:
